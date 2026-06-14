@@ -1,0 +1,69 @@
+@model MovieRentalSystem.Models.Customer
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h2>@Model.FirstName @Model.LastName</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="row">
+                    <dt class="col-sm-4">Email:</dt>
+                    <dd class="col-sm-8">@Model.Email</dd>
+
+                    <dt class="col-sm-4">Phone:</dt>
+                    <dd class="col-sm-8">@Model.Phone</dd>
+
+                    <dt class="col-sm-4">Registered:</dt>
+                    <dd class="col-sm-8">@Model.RegisteredDate.ToString("dd/MM/yyyy")</dd>
+
+                    <dt class="col-sm-4">Total Rentals:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-primary">@Model.Rentals.Count</span>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="col-md-6">
+                <h5>Rental History</h5>
+                @if (Model.Rentals.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var rental in Model.Rentals.OrderByDescending(r => r.RentalDate))
+                        {
+                            <div class="list-group-item">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">@rental.Movie.Title</h6>
+                                    <small>@rental.RentalDate.ToString("dd/MM/yyyy")</small>
+                                </div>
+                                <p class="mb-1">
+                                    Price: @rental.TotalPrice.ToString("C")
+                                </p>
+                                @if (rental.IsReturned && rental.ReturnDate.HasValue)
+                                {
+                                    <small class="text-success">Returned: @rental.ReturnDate.Value.ToString("dd/MM/yyyy")</small>
+                                }
+                                else
+                                {
+                                    <small class="text-warning">Currently rented</small>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">No rental history</p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

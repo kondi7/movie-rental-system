@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h1>Movie Rental System</h1>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+            <h4>Welcome!</h4>
+            <p>Use this system to manage movies, customers, and rentals.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Movies</h5>
+                <p class="card-text">View and manage movie inventory.</p>
+                <a asp-controller="Movies" asp-action="Index" class="btn btn-primary">Go to Movies</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Customers</h5>
+                <p class="card-text">Manage customer information.</p>
+                <a asp-controller="Customers" asp-action="Index" class="btn btn-primary">Go to Customers</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Rentals</h5>
+                <p class="card-text">Create and manage rentals.</p>
+                <a asp-controller="Rentals" asp-action="Index" class="btn btn-primary">Go to Rentals</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            Please always add customers to the system before attempting to create rentals.
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+@model MovieRentalSystem.Models.Rental
+
+@{
+    ViewData["Title"] = "Rental Details";
+}
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h2>Rental Details</h2>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Movie:</dt>
+            <dd class="col-sm-9">
+                <strong>@Model.Movie.Title</strong>
+                <br />
+                <small class="text-muted">@Model.Movie.Director (@Model.Movie.Year)</small>
+            </dd>
+
+            <dt class="col-sm-3">Customer:</dt>
+            <dd class="col-sm-9">
+                <strong>@Model.Customer.FirstName @Model.Customer.LastName</strong>
+                <br />
+                <small class="text-muted">@Model.Customer.Email</small>
+            </dd>
+
+            <dt class="col-sm-3">Rental Date:</dt>
+            <dd class="col-sm-9">@Model.RentalDate.ToString("dd/MM/yyyy HH:mm")</dd>
+
+            <dt class="col-sm-3">Return Date:</dt>
+            <dd class="col-sm-9">
+                @if (Model.ReturnDate.HasValue)
+                {
+                    @Model.ReturnDate.Value.ToString("dd/MM/yyyy HH:mm")
+                }
+                else
+                {
+                    <span class="text-warning">Not returned yet</span>
+                }
+            </dd>
+
+            @if (Model.ReturnDate.HasValue)
+            {
+                var days = (Model.ReturnDate.Value - Model.RentalDate).Days;
+                if (days < 1) days = 1;
+                
+                <dt class="col-sm-3">Days Rented:</dt>
+                <dd class="col-sm-9">@days day(s)</dd>
+            }
+
+            <dt class="col-sm-3">Total Price:</dt>
+            <dd class="col-sm-9"><strong>@Model.TotalPrice.ToString("C")</strong></dd>
+
+            <dt class="col-sm-3">Status:</dt>
+            <dd class="col-sm-9">
+                @if (Model.IsReturned)
+                {
+                    <span class="badge bg-success">Returned</span>
+                }
+                else
+                {
+                    <span class="badge bg-warning">Active</span>
+                }
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        @if (!Model.IsReturned)
+        {
+            <a asp-action="Return" asp-route-id="@Model.Id" class="btn btn-success">Process Return</a>
+        }
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

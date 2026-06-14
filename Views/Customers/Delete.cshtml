@@ -1,0 +1,37 @@
+@model MovieRentalSystem.Models.Customer
+
+@{
+    ViewData["Title"] = "Delete Customer";
+}
+
+<h1>Delete Customer</h1>
+
+<div class="alert alert-danger">
+    <h4>Are you sure you want to delete this customer?</h4>
+</div>
+
+<div class="card">
+    <div class="card-header bg-danger text-white">
+        <h3>@Model.FirstName @Model.LastName</h3>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Email:</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Phone:</dt>
+            <dd class="col-sm-9">@Model.Phone</dd>
+
+            <dt class="col-sm-3">Registered:</dt>
+            <dd class="col-sm-9">@Model.RegisteredDate.ToString("dd/MM/yyyy")</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete" class="mt-3">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you absolutely sure?')">
+        Confirm Delete
+    </button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
